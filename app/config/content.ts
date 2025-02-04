@@ -1,3 +1,5 @@
+import type { Content } from "@/app/types/content";
+
 export const siteConfig = {
   siteName: "CTUAAA 2025",
   siteUrl: "https://2025.ctuaaa.org/",
@@ -5,11 +7,16 @@ export const siteConfig = {
     title: "第十三届交通大学美洲峰会",
     date: "2025年5月24-25日",
     location: "加州硅谷",
+    ticketUrl: "https://ctuaaa.ticketbud.com/2025",
   },
   content: {
-    introduction:
-      "2025年5月24-25日，第十三届交通大学美洲校友联谊峰会将在创新圣地加州硅谷盛大举行。这片孕育无数颠覆性技术的土地，将成为交大校友共话未来、书写新篇章的梦想舞台。",
+    introduction: {
+      type: "text",
+      content:
+        "2025年5月24-25日，第十三届交通大学美洲校友联谊峰会将在创新圣地加州硅谷盛大举行。这片孕育无数颠覆性技术的土地，将成为交大校友共话未来、书写新篇章的梦想舞台。",
+    } as Content,
     highlights: {
+      type: "highlights",
       title: "峰会亮点",
       items: [
         "全球趋势探讨：聚焦AI、具身智能技术及宏观经济动向",
@@ -17,19 +24,34 @@ export const siteConfig = {
         "精彩项目展示：展现交大人的创新成果",
         "畅叙情谊：新老朋友相聚，共叙交大情",
       ],
-    },
+    } as Content,
     sections: [
       {
+        type: "text",
         title: "传承与创新",
         content:
           '美洲交大校友会始于1943年，如今已是一棵根深叶茂的参天大树。多年来，"五校一家、同行致远"的理念指引着我们，通过无数次联谊与合作，传承交大精神，谱写校友情谊的华丽乐章。',
-      },
+      } as Content,
+      {
+        type: "video",
+        title: "校友会宣传片",
+        videoId: "bRJxluiLFfE",
+      } as Content,
+      {
+        type: "text",
+        content:
+          "自1964年首次举办以来，美洲校友联谊峰会已成为母校和美洲校友共同期盼的团聚时刻。在这片思想激荡、未来可期的土地上，我们将携手探讨全球贸易与产业机遇，在全球变革中寻找新的可能。",
+      } as Content,
+      {
+        type: "text",
+        content:
+          "在硅谷这片梦想与实践交织的土地上，让我们以交大的名义相聚，共同描绘人类智慧与科技碰撞的辉煌篇章。期待与您在2025年的春末夏初，在硅谷相见，畅叙情谊，共绘梦想，让交大精神继续熠熠生辉！",
+      } as Content,
     ],
-    additionalInfo: [
-      "自1964年首次举办以来，美洲校友联谊峰会已成为母校和美洲校友共同期盼的团聚时刻。在这片思想激荡、未来可期的土地上，我们将携手探讨全球贸易与产业机遇，在全球变革中寻找新的可能。",
-      "在硅谷这片梦想与实践交织的土地上，让我们以交大的名义相聚，共同描绘人类智慧与科技碰撞的辉煌篇章。期待与您在2025年的春末夏初，在硅谷相见，畅叙情谊，共绘梦想，让交大精神继续熠熠生辉！",
-    ],
-    notice: "具体嘉宾名单与详细日程将陆续公布，敬请期待。",
+    notice: {
+      type: "notice",
+      content: "具体嘉宾名单与详细日程将陆续公布，敬请期待。",
+    } as Content,
   },
   footer: {
     links: [
@@ -42,5 +64,44 @@ export const siteConfig = {
       { text: "VI", href: "https://ctuaaa.org/about_us/vi/" },
     ],
     copyright: "2025 Copyright © CTUAAA",
+  },
+  tabs: {
+    items: [
+      {
+        id: "schedule",
+        label: "会议日程",
+        content: {
+          type: "image",
+          image: "/posters/agenda.png",
+          alt: "第十三届交通大学美洲校友联谊峰会日程安排",
+        },
+      },
+      {
+        id: "speakers",
+        label: "特邀嘉宾",
+        content: {
+          type: "image",
+          image: "/posters/participants.png",
+          alt: "第十三届交通大学美洲校友联谊峰会参会嘉宾",
+        },
+      },
+      {
+        id: "guide",
+        label: "参会指南",
+        content: {
+          title: "参会指南",
+          notice: "参会指南将在近期发布",
+        },
+      },
+      {
+        id: "video",
+        label: "峰会视频",
+        content: {
+          type: "video",
+          videoId: "bRJxluiLFfE",
+          title: "交通大学美洲校友会宣传片",
+        },
+      },
+    ],
   },
 };
