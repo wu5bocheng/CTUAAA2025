@@ -18,6 +18,7 @@ export default function Section({ children, className = "", onInView, index }: S
   return (
     <section
       ref={ref}
+      data-section-index={index}
       className={`min-h-screen w-full flex items-center justify-center p-8 
       transition-opacity duration-700
       ${inView ? "opacity-100" : "opacity-0"}
