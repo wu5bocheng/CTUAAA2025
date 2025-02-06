@@ -1,4 +1,4 @@
-export type ContentType = "text" | "video" | "highlights" | "notice" | "image";
+export type ContentType = "text" | "video" | "highlights" | "notice" | "image" | "html";
 
 export interface BaseContent {
   type: ContentType;
@@ -18,6 +18,7 @@ export interface VideoContent extends BaseContent {
 export interface HighlightsContent extends BaseContent {
   type: "highlights";
   items: string[];
+  content?: string;
 }
 
 export interface NoticeContent extends BaseContent {
@@ -50,7 +51,12 @@ export interface TabVideoContent extends TabContent {
 export type TabItem = {
   id: string;
   label: string;
-  content: TabImageContent | TabVideoContent;
+  content: TabImageContent | TabVideoContent | HtmlContent;
 };
 
-export type Content = TextContent | VideoContent | HighlightsContent | NoticeContent | ImageContent;
+export interface HtmlContent extends BaseContent {
+  type: "html";
+  content: string;
+}
+
+export type Content = TextContent | VideoContent | HighlightsContent | NoticeContent | ImageContent | HtmlContent;

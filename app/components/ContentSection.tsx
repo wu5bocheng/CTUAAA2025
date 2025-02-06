@@ -6,16 +6,11 @@ import NavigationDots from "./NavigationDots";
 import ContentRenderer from "./ContentRenderer";
 import TabSection from "./TabSection";
 import { siteConfig } from "@/app/config/content";
+import { TabItem, Content } from "@/app/types/content";
 
 export default function ContentSection() {
   const [currentSection, setCurrentSection] = useState(0);
-  const sections = [
-    { type: "tabs" as const }, // Add "as const" to narrow the type
-    siteConfig.content.introduction,
-    siteConfig.content.highlights,
-    ...siteConfig.content.sections,
-    siteConfig.content.notice,
-  ];
+  const sections = siteConfig.sections;
   const totalSections = sections.length;
 
   const handleSectionInView = (index: number, inView: boolean) => {
@@ -30,12 +25,12 @@ export default function ContentSection() {
 
       {sections.map((section, index) => (
         <Section
-          key={index}
+          key={section.id}
           className={index % 2 === 0 ? "" : "bg-gradient-to-b from-gray-50 to-white"}
           onInView={(inView) => handleSectionInView(index, inView)}
           index={index}
         >
-          {section.type === "tabs" ? <TabSection /> : <ContentRenderer content={section} />}
+          {section.type === "tabs" ? <TabSection items={section.items as TabItem[]} /> : <ContentRenderer content={section as Content} />}
         </Section>
       ))}
     </div>

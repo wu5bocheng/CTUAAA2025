@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 interface BaseContent {
-  type: "video" | "image" | "highlights" | "text" | "notice";
+  type: "video" | "image" | "highlights" | "text" | "notice" | "html";
   title?: string;
   priority?: boolean;
 }
@@ -20,6 +20,7 @@ interface ImageContent extends BaseContent {
 interface HighlightsContent extends BaseContent {
   type: "highlights";
   items: string[];
+  content?: string;
 }
 
 interface TextContent extends BaseContent {
@@ -32,7 +33,12 @@ interface NoticeContent extends BaseContent {
   content: string;
 }
 
-type Content = VideoContent | ImageContent | HighlightsContent | TextContent | NoticeContent;
+interface HtmlContent extends BaseContent {
+  type: "html";
+  content: string;
+}
+
+type Content = VideoContent | ImageContent | HighlightsContent | TextContent | NoticeContent | HtmlContent;
 
 interface ContentRendererProps {
   content: Content;
@@ -79,7 +85,7 @@ export default function ContentRenderer({ content, className = "" }: ContentRend
 
     case "highlights":
       return (
-        <div className={`max-w-4xl mx-auto ${className}`}>
+        <div className={`max-w-2xl mx-auto ${className}`}>
           <h3 className="text-3xl font-bold mb-8 text-center text-gray-900">{content.title}</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {content.items.map((item: string, index: number) => (
@@ -92,12 +98,13 @@ export default function ContentRenderer({ content, className = "" }: ContentRend
               </div>
             ))}
           </div>
+          {content.content && <div className="prose prose-lg prose-gray mx-auto" dangerouslySetInnerHTML={{ __html: content.content }} />}
         </div>
       );
 
     case "text":
       return (
-        <div className={`max-w-3xl mx-auto text-center ${className}`}>
+        <div className={`max-w-3xl mx-auto ${className}`}>
           {content.title && <h3 className="text-3xl font-bold mb-6 text-gray-900">{content.title}</h3>}
           <p className="text-xl leading-relaxed text-gray-700 font-light">{content.content}</p>
         </div>
@@ -107,6 +114,14 @@ export default function ContentRenderer({ content, className = "" }: ContentRend
       return (
         <div className={`text-center py-12 ${className}`}>
           <p className="text-lg text-gray-600 italic">{content.content}</p>
+        </div>
+      );
+
+    case "html":
+      return (
+        <div className={`max-w-4xl mx-auto ${className}`}>
+          {content.title && <h3 className="text-3xl font-bold mb-6 text-gray-900">{content.title}</h3>}
+          <div className="prose prose-lg prose-gray mx-auto" dangerouslySetInnerHTML={{ __html: content.content }} />
         </div>
       );
 

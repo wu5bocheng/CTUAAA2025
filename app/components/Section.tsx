@@ -11,7 +11,7 @@ interface SectionProps {
 
 export default function Section({ children, className = "", onInView, index }: SectionProps) {
   const { ref, inView } = useInView({
-    threshold: 0.5,
+    threshold: 0.2,
     onChange: (inView) => onInView(inView),
   });
 
@@ -19,8 +19,8 @@ export default function Section({ children, className = "", onInView, index }: S
     <section
       ref={ref}
       data-section-index={index}
-      className={`min-h-screen w-full flex items-center justify-center p-8 
-      transition-opacity duration-700
+      className={`w-full flex items-center justify-center py-6 px-6 
+      transition-opacity duration-500
       ${inView ? "opacity-100" : "opacity-0"}
       ${className}`}
     >

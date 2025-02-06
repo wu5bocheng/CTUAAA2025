@@ -10,7 +10,6 @@ export default function Home() {
       <Logo />
       <Background />
       <HeroSection />
-
       <div className="relative z-20 bg-white">
         <ContentSection />
         <Footer />

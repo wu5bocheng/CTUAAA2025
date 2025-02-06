@@ -1,18 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { siteConfig } from "@/app/config/content";
 import ContentRenderer from "./ContentRenderer";
 import type { TabItem } from "@/app/types/content";
 
-export default function TabSection() {
-  const [activeTab, setActiveTab] = useState(siteConfig.tabs.items[0].id);
+interface TabSectionProps {
+  items: TabItem[];
+}
+
+export default function TabSection({ items }: TabSectionProps) {
+  const [activeTab, setActiveTab] = useState(items[0].id);
 
   return (
     <div className="w-full max-w-4xl mx-auto px-4">
       {/* Tab Navigation */}
       <div className="flex flex-wrap justify-center gap-2 mb-8">
-        {siteConfig.tabs.items.map((tab) => (
+        {items.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
@@ -26,7 +29,7 @@ export default function TabSection() {
 
       {/* Tab Content */}
       <div className="mt-8">
-        {(siteConfig.tabs.items as TabItem[]).map((tab) => (
+        {items.map((tab) => (
           <div
             key={tab.id}
             className={`transition-all duration-500 
