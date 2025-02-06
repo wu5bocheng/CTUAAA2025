@@ -81,7 +81,7 @@ export const siteConfig = {
           label: "峰会视频",
           content: {
             type: "video",
-            videoId: "bRJxluiLFfE",
+            videoId: "PGC5_HWyRjw",
             title: "交通大学美洲校友会宣传片",
           },
         },
