@@ -55,7 +55,14 @@ export const siteConfig = {
       `,
     },
     {
+      id: "video",
+      type: "video",
+      videoId: "PGC5_HWyRjw",
+      title: "交通大学美洲校友会宣传片",
+    },
+    {
       id: "conference",
+
       type: "tabs",
       items: [
         {
@@ -76,15 +83,6 @@ export const siteConfig = {
         //     alt: "第十三届交通大学美洲校友联谊峰会参会嘉宾",
         //   },
         // },
-        {
-          id: "video",
-          label: "峰会视频",
-          content: {
-            type: "video",
-            videoId: "PGC5_HWyRjw",
-            title: "交通大学美洲校友会宣传片",
-          },
-        },
       ],
     },
     {
