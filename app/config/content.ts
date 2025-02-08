@@ -58,22 +58,13 @@ export const siteConfig = {
       id: "video",
       type: "video",
       videoId: "PGC5_HWyRjw",
-      title: "交通大学美洲校友会宣传片",
+      title: "峰会宣传片",
     },
     {
       id: "conference",
 
       type: "tabs",
       items: [
-        {
-          id: "video",
-          label: "峰会视频",
-          content: {
-            type: "video",
-            videoId: "PGC5_HWyRjw",
-            title: "交通大学美洲校友会宣传片",
-          },
-        },
         {
           id: "schedule",
           label: "会议日程",
