@@ -63,9 +63,17 @@ export default function ContentRenderer({ content, className = "" }: ContentRend
   switch (content.type) {
     case "video":
       return (
-        <div className={`space-y-6 ${className}`}>
-          {content.title && <h3 className="text-xl text-center mb-6">{content.title}</h3>}
-          {renderYouTubeVideo(content.videoId)}
+        <div className={`w-full py-6 px-6 ${className}`}>
+          {content.title && <h3 className="text-3xl font-bold text-center mb-8 text-gray-900">{content.title}</h3>}
+          <div className="relative w-full max-w-4xl mx-auto aspect-video">
+            <iframe
+              className="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg"
+              src={`https://www.youtube.com/embed/${content.videoId}?rel=0`}
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
         </div>
       );
 
