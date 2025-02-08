@@ -55,7 +55,14 @@ export const siteConfig = {
       `,
     },
     {
+      id: "video",
+      type: "video",
+      videoId: "PGC5_HWyRjw",
+      title: "交通大学美洲校友会宣传片",
+    },
+    {
       id: "conference",
+
       type: "tabs",
       items: [
         {

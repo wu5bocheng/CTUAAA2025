@@ -63,8 +63,8 @@ export default function ContentRenderer({ content, className = "" }: ContentRend
   switch (content.type) {
     case "video":
       return (
-        <div className={`space-y-6 ${className}`}>
-          {content.title && <h3 className="text-2xl font-bold text-center mb-6">{content.title}</h3>}
+        <div className={`w-full py-6 px-6 ${className}`}>
+          {content.title && <h3 className="text-3xl font-bold text-center mb-8 text-gray-900">{content.title}</h3>}
           {renderYouTubeVideo(content.videoId)}
         </div>
       );
