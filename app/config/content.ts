@@ -62,7 +62,6 @@ export const siteConfig = {
     },
     {
       id: "conference",
-
       type: "tabs",
       items: [
         {
@@ -74,15 +73,15 @@ export const siteConfig = {
             alt: "第十三届交通大学美洲校友联谊峰会日程安排",
           },
         },
-        // {
-        //   id: "speakers",
-        //   label: "特邀嘉宾",
-        //   content: {
-        //     type: "image",
-        //     image: "/posters/participants.png",
-        //     alt: "第十三届交通大学美洲校友联谊峰会参会嘉宾",
-        //   },
-        // },
+        {
+          id: "sponsorship",
+          label: "峰会赞助",
+          content: {
+            type: "image",
+            image: "/posters/sponsor.jpg",
+            alt: "第十三届交通大学美洲校友联谊峰会赞助方案",
+          },
+        },
       ],
     },
     {
