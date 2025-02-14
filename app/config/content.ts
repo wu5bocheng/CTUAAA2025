@@ -78,7 +78,7 @@ export const siteConfig = {
           label: "峰会赞助",
           content: {
             type: "image",
-            image: "/posters/sponsor.jpg",
+            image: "/posters/sponsor.png",
             alt: "第十三届交通大学美洲校友联谊峰会赞助方案",
           },
         },
