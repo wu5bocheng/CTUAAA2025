@@ -96,17 +96,17 @@ export default function ArticleSlider() {
 
   return (
     <div
-      className="relative w-full max-w-6xl mx-auto h-[400px] overflow-hidden"
+      className="relative w-full max-w-6xl mx-auto h-[250px] sm:h-[300px] md:h-[400px] overflow-hidden"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Navigation Arrows */}
+      {/* Navigation Arrows - Hide on small screens */}
       <button
         onClick={() => handleSlide("left")}
         className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-black/30 hover:bg-black/50 
           text-white p-2 rounded-full backdrop-blur-sm transition-all"
       >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
       </button>
@@ -116,7 +116,7 @@ export default function ArticleSlider() {
         className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-black/30 hover:bg-black/50 
           text-white p-2 rounded-full backdrop-blur-sm transition-all"
       >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>
       </button>
@@ -145,19 +145,19 @@ export default function ArticleSlider() {
               key={article.slug}
               {...linkProps}
               onClick={(e) => handleArticleClick(e, article)}
-              className={`absolute transition-all duration-500 ease-in-out
+              className={`absolute w-[320px] sm:w-[600px] md:w-[800px] h-full transition-all duration-500 ease-in-out
                 ${isActive ? "z-10 scale-100 opacity-100 translate-x-0" : ""}
                 ${isPrev ? "z-0 scale-90 opacity-50 -translate-x-full" : ""}
                 ${isNext ? "z-0 scale-90 opacity-50 translate-x-full" : ""}
                 ${!isActive && !isPrev && !isNext ? "opacity-0" : ""}
               `}
             >
-              <div className="relative w-[800px] h-[400px] rounded-xl overflow-hidden group">
+              <div className="relative w-full h-full rounded-xl overflow-hidden group">
                 <Image src={article.coverImage} alt={article.title} fill className="object-cover" priority />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                  <h3 className="text-2xl font-bold mb-2 group-hover:underline">{article.title}</h3>
-                  <p className="text-gray-200">{article.date}</p>
+                <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-6 text-white">
+                  <h3 className="text-base sm:text-xl md:text-2xl font-bold mb-1 sm:mb-2 group-hover:underline line-clamp-2">{article.title}</h3>
+                  <p className="text-sm sm:text-base text-gray-200">{article.date}</p>
                 </div>
               </div>
             </ArticleWrapper>
@@ -166,13 +166,13 @@ export default function ArticleSlider() {
       </div>
 
       {/* Dots */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+      <div className="absolute bottom-2 sm:bottom-4 left-1/2 -translate-x-1/2 flex gap-1 sm:gap-2 z-20">
         {articles.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentIndex(index)}
-            className={`w-2 h-2 rounded-full transition-all
-              ${currentIndex === index ? "bg-white w-4" : "bg-white/50"}`}
+            className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all
+              ${currentIndex === index ? "bg-white w-3 sm:w-4" : "bg-white/50"}`}
           />
         ))}
       </div>
