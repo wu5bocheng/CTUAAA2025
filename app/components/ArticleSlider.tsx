@@ -34,6 +34,7 @@ export default function ArticleSlider() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -62,14 +63,14 @@ export default function ArticleSlider() {
   useEffect(() => {
     let interval: NodeJS.Timeout;
 
-    if (!isPaused) {
+    if (!isPaused && !isHovered) {
       interval = setInterval(() => {
         handleSlide("right");
       }, 5000);
     }
 
     return () => clearInterval(interval);
-  }, [isPaused, handleSlide]);
+  }, [isPaused, handleSlide, isHovered]);
 
   // Reset pause after 10 seconds of inactivity
   useEffect(() => {
@@ -94,7 +95,11 @@ export default function ArticleSlider() {
   }
 
   return (
-    <div className="relative w-full max-w-6xl mx-auto h-[400px] overflow-hidden">
+    <div
+      className="relative w-full max-w-6xl mx-auto h-[400px] overflow-hidden"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       {/* Navigation Arrows */}
       <button
         onClick={() => handleSlide("left")}
