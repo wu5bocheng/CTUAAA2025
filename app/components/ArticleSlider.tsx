@@ -12,7 +12,15 @@ interface Article {
   externalUrl?: string;
 }
 
-const articles: Article[] = [
+// Define articles
+const unsortedArticles: Article[] = [
+  {
+    slug: "2024-gong-fengmin-interview",
+    title: "对话弓峰敏：硅谷信息安全创业拓荒者",
+    date: "2025年03月03日",
+    coverImage: "/articles/2024-gong-fengmin-interview/cover.jpg",
+    externalUrl: "https://mp.weixin.qq.com/s/jrnA2ttj-7a0Dc895PNeBg",
+  },
   {
     slug: "2024-02-09-summit-registration",
     title: "【报名正式开启】2025交通大学美洲校友联谊峰会与您相约硅谷",
@@ -29,6 +37,22 @@ const articles: Article[] = [
   },
   // Add more articles here
 ];
+
+// Sort articles by date (most recent first)
+const articles = [...unsortedArticles].sort((a, b) => {
+  // Extract year, month, day from the date strings
+  const aMatch = a.date.match(/(\d{4})年(\d{2})月(\d{2})日/);
+  const bMatch = b.date.match(/(\d{4})年(\d{2})月(\d{2})日/);
+
+  if (!aMatch || !bMatch) return 0;
+
+  const aDate = new Date(parseInt(aMatch[1]), parseInt(aMatch[2]) - 1, parseInt(aMatch[3]));
+
+  const bDate = new Date(parseInt(bMatch[1]), parseInt(bMatch[2]) - 1, parseInt(bMatch[3]));
+
+  // Sort in descending order (newest first)
+  return bDate.getTime() - aDate.getTime();
+});
 
 export default function ArticleSlider() {
   const [currentIndex, setCurrentIndex] = useState(0);
