@@ -61,6 +61,11 @@ export const siteConfig = {
       title: "峰会宣传片",
     },
     {
+      id: "participants",
+      type: "participants",
+      title: "参会嘉宾",
+    },
+    {
       id: "conference",
       type: "tabs",
       items: [
@@ -87,12 +92,7 @@ export const siteConfig = {
     {
       id: "notice",
       type: "notice",
-      content: "具体嘉宾名单与详细日程将陆续公布，敬请期待。",
-    },
-    {
-      id: "participants",
-      type: "participants",
-      title: "参会嘉宾",
+      content: "具体嘉宾名单与详细日程将陆续更新，敬请期待。",
     },
   ],
   footer: {

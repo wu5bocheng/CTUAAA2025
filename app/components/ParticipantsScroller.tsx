@@ -25,8 +25,6 @@ export default function ParticipantsScroller() {
 
   return (
     <div className="w-full max-w-6xl mx-auto">
-      <h2 className="text-3xl font-bold text-center mb-8">参会嘉宾</h2>
-
       {/* Industry Filter */}
       <div className="flex flex-wrap justify-center gap-2 mb-8">
         <button
@@ -91,16 +89,13 @@ export default function ParticipantsScroller() {
 
 function ParticipantCard({ participant }: { participant: Participant }) {
   return (
-    <div className="flex-shrink-0 w-64 mx-2 snap-center">
-      <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 h-full">
-        <div className="relative h-64 w-full">
-          <Image src={participant.image} alt={participant.name} fill className="object-cover" />
-        </div>
-        <div className="p-4">
-          <h3 className="text-lg font-bold">{participant.name}</h3>
-          <p className="text-gray-600">{participant.title}</p>
-          <p className="text-gray-800 font-medium">{participant.company}</p>
-          <span className="inline-block mt-2 px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs">{participant.industry}</span>
+    <div className="flex-shrink-0 w-80 mx-2 snap-center">
+      <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+        <div className="relative aspect-[3091/4000] w-full">
+          <Image src={participant.image} alt={participant.id} fill className="object-cover" priority={participant.industry === "主要嘉宾"} />
+          <div className="absolute bottom-4 left-4">
+            <span className="px-3 py-1 bg-black/50 text-white rounded-full text-sm backdrop-blur-sm">{participant.industry}</span>
+          </div>
         </div>
       </div>
     </div>
