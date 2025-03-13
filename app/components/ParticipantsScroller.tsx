@@ -15,22 +15,19 @@ export default function ParticipantsScroller() {
 
   const filteredParticipants = selectedIndustry === "全部" ? participants : participants.filter((p) => p.industry === selectedIndustry);
 
+  // Track previous filter selection to detect changes
+  const prevIndustryRef = useRef(selectedIndustry);
+
   // Check scroll position to determine arrow visibility
   const checkScrollPosition = () => {
     if (!scrollContainerRef.current) return;
 
     const container = scrollContainerRef.current;
     const isScrollable = container.scrollWidth > container.clientWidth;
-    const isAtEnd = container.scrollLeft >= container.scrollWidth - container.clientWidth - 20;
+    const isAtEnd = container.scrollLeft >= container.scrollWidth - container.clientWidth;
 
     setShowLeftArrow(container.scrollLeft > 20);
     setShowRightArrow(isScrollable && !isAtEnd);
-
-    // If we've reached the end, reset to beginning
-    if (isAtEnd && !isPaused) {
-      // Smooth scroll back to start
-      container.scrollTo({ left: 0, behavior: "smooth" });
-    }
   };
 
   // Setup auto-scroll
@@ -48,8 +45,8 @@ export default function ParticipantsScroller() {
           const cardWidth = 336; // Same as in handleScroll
 
           // Check if we're near the end
-          if (container.scrollLeft >= container.scrollWidth - container.clientWidth - cardWidth) {
-            // If near end, smooth scroll back to start
+          if (container.scrollLeft >= container.scrollWidth - container.clientWidth) {
+            // If at end, smooth scroll back to start
             container.scrollTo({ left: 0, behavior: "smooth" });
           } else {
             // Otherwise scroll one card over
@@ -80,12 +77,18 @@ export default function ParticipantsScroller() {
       // Check initial scroll position
       checkScrollPosition();
 
+      // Reset scroll position to start ONLY when filter changes
+      if (prevIndustryRef.current !== selectedIndustry) {
+        container.scrollTo({ left: 0, behavior: "auto" });
+        prevIndustryRef.current = selectedIndustry;
+      }
+
       // Check again after content might have changed
       setTimeout(checkScrollPosition, 100);
 
       return () => container.removeEventListener("scroll", handleScrollEvent);
     }
-  }, [filteredParticipants]);
+  }, [filteredParticipants, selectedIndustry]);
 
   // Temporarily pause auto-scroll when user manually interacts with the scroller
   const handleManualInteraction = () => {
@@ -96,10 +99,10 @@ export default function ParticipantsScroller() {
       clearTimeout(pauseTimeoutRef.current);
     }
 
-    // Resume auto-scroll after 5 seconds of inactivity
+    // Resume auto-scroll after 2 seconds of inactivity
     pauseTimeoutRef.current = setTimeout(() => {
       setIsPaused(false);
-    }, 5000);
+    }, 3000);
   };
 
   const handleScroll = (direction: "left" | "right") => {
