@@ -1,20 +1,116 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { participants, industries, Participant } from "../config/participants";
 
 export default function ParticipantsScroller() {
   const [selectedIndustry, setSelectedIndustry] = useState<string>("全部");
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(true);
+  const [isPaused, setIsPaused] = useState(false);
+  const autoScrollIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const pauseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const filteredParticipants = selectedIndustry === "全部" ? participants : participants.filter((p) => p.industry === selectedIndustry);
 
-  const handleScroll = (direction: "left" | "right") => {
+  // Check scroll position to determine arrow visibility
+  const checkScrollPosition = () => {
     if (!scrollContainerRef.current) return;
 
     const container = scrollContainerRef.current;
-    const scrollAmount = 300;
+    const isScrollable = container.scrollWidth > container.clientWidth;
+    const isAtEnd = container.scrollLeft >= container.scrollWidth - container.clientWidth - 20;
+
+    setShowLeftArrow(container.scrollLeft > 20);
+    setShowRightArrow(isScrollable && !isAtEnd);
+
+    // If we've reached the end, reset to beginning
+    if (isAtEnd && !isPaused) {
+      // Smooth scroll back to start
+      container.scrollTo({ left: 0, behavior: "smooth" });
+    }
+  };
+
+  // Setup auto-scroll
+  useEffect(() => {
+    // Clear any existing interval
+    if (autoScrollIntervalRef.current) {
+      clearInterval(autoScrollIntervalRef.current);
+    }
+
+    if (!isPaused) {
+      // Create new interval that scrolls right every 3 seconds
+      autoScrollIntervalRef.current = setInterval(() => {
+        if (scrollContainerRef.current) {
+          const container = scrollContainerRef.current;
+          const cardWidth = 336; // Same as in handleScroll
+
+          // Check if we're near the end
+          if (container.scrollLeft >= container.scrollWidth - container.clientWidth - cardWidth) {
+            // If near end, smooth scroll back to start
+            container.scrollTo({ left: 0, behavior: "smooth" });
+          } else {
+            // Otherwise scroll one card over
+            container.scrollBy({ left: cardWidth, behavior: "smooth" });
+          }
+          checkScrollPosition();
+        }
+      }, 3000); // Scroll every 3 seconds
+    }
+
+    return () => {
+      if (autoScrollIntervalRef.current) {
+        clearInterval(autoScrollIntervalRef.current);
+        autoScrollIntervalRef.current = null;
+      }
+    };
+  }, [isPaused, filteredParticipants]);
+
+  // Add scroll event listener
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (container) {
+      const handleScrollEvent = () => {
+        checkScrollPosition();
+      };
+
+      container.addEventListener("scroll", handleScrollEvent);
+      // Check initial scroll position
+      checkScrollPosition();
+
+      // Check again after content might have changed
+      setTimeout(checkScrollPosition, 100);
+
+      return () => container.removeEventListener("scroll", handleScrollEvent);
+    }
+  }, [filteredParticipants]);
+
+  // Temporarily pause auto-scroll when user manually interacts with the scroller
+  const handleManualInteraction = () => {
+    setIsPaused(true);
+
+    // Clear any existing timeout
+    if (pauseTimeoutRef.current) {
+      clearTimeout(pauseTimeoutRef.current);
+    }
+
+    // Resume auto-scroll after 5 seconds of inactivity
+    pauseTimeoutRef.current = setTimeout(() => {
+      setIsPaused(false);
+    }, 5000);
+  };
+
+  const handleScroll = (direction: "left" | "right") => {
+    // Temporarily pause auto-scroll
+    handleManualInteraction();
+
+    if (!scrollContainerRef.current) return;
+
+    const container = scrollContainerRef.current;
+    const cardWidth = 336; // 320px card width + 16px (2*8px margins)
+    const scrollAmount = cardWidth;
 
     if (direction === "left") {
       container.scrollBy({ left: -scrollAmount, behavior: "smooth" });
@@ -28,7 +124,10 @@ export default function ParticipantsScroller() {
       {/* Industry Filter */}
       <div className="flex flex-wrap justify-center gap-2 mb-8">
         <button
-          onClick={() => setSelectedIndustry("全部")}
+          onClick={() => {
+            setSelectedIndustry("全部");
+            handleManualInteraction();
+          }}
           className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300
             ${selectedIndustry === "全部" ? "bg-black text-white shadow-lg" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}
         >
@@ -38,7 +137,10 @@ export default function ParticipantsScroller() {
         {industries.map((industry) => (
           <button
             key={industry}
-            onClick={() => setSelectedIndustry(industry)}
+            onClick={() => {
+              setSelectedIndustry(industry);
+              handleManualInteraction();
+            }}
             className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300
               ${selectedIndustry === industry ? "bg-black text-white shadow-lg" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}
           >
@@ -50,31 +152,39 @@ export default function ParticipantsScroller() {
       {/* Participants Scroller */}
       <div className="relative">
         {/* Navigation Arrows */}
-        <button
-          onClick={() => handleScroll("left")}
-          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black/30 hover:bg-black/50 
-            text-white p-2 rounded-full backdrop-blur-sm transition-all"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
+        {showLeftArrow && (
+          <button
+            onClick={() => handleScroll("left")}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black/30 hover:bg-black/50 
+              text-white p-2 rounded-full backdrop-blur-sm transition-all"
+            aria-label="Scroll left"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+        )}
 
-        <button
-          onClick={() => handleScroll("right")}
-          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black/30 hover:bg-black/50 
-            text-white p-2 rounded-full backdrop-blur-sm transition-all"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
+        {showRightArrow && (
+          <button
+            onClick={() => handleScroll("right")}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black/30 hover:bg-black/50 
+              text-white p-2 rounded-full backdrop-blur-sm transition-all"
+            aria-label="Scroll right"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        )}
 
         {/* Participants Container */}
         <div
           ref={scrollContainerRef}
-          className="flex overflow-x-auto pb-6 pt-2 px-4 scrollbar-hide snap-x snap-mandatory"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          className="flex overflow-x-auto pb-6 pt-2 px-4 scrollbar-hide snap-x snap-mandatory scroll-px-4"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none", scrollBehavior: "smooth" }}
+          onMouseDown={handleManualInteraction}
+          onTouchStart={handleManualInteraction}
         >
           {filteredParticipants.length > 0 ? (
             filteredParticipants.map((participant) => <ParticipantCard key={participant.id} participant={participant} />)
