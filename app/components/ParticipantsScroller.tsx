@@ -205,7 +205,7 @@ function ParticipantCard({ participant }: { participant: Participant }) {
     <div className="flex-shrink-0 w-80 mx-2 snap-center">
       <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
         <div className="relative aspect-[3091/4000] w-full">
-          <Image src={participant.image} alt={participant.id} fill className="object-cover" priority={participant.industry === "主要嘉宾"} />
+          <Image src={participant.image} alt={participant.id} fill className="object-cover" priority={participant.industry === "主旨演讲嘉宾"} />
           <div className="absolute bottom-4 left-4">
             <span className="px-3 py-1 bg-black/50 text-white rounded-full text-sm backdrop-blur-sm">{participant.industry}</span>
           </div>
