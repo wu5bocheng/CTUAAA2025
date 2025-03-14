@@ -9,6 +9,11 @@ export const siteConfig = {
   },
   sections: [
     {
+      id: "participants",
+      type: "participants",
+      title: "参会嘉宾",
+    },
+    {
       id: "intro",
       type: "html",
       content: `
@@ -18,11 +23,6 @@ export const siteConfig = {
           </p>
         </div>
       `,
-    },
-    {
-      id: "participants",
-      type: "participants",
-      title: "参会嘉宾",
     },
     {
       id: "highlights",
