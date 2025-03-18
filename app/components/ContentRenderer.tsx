@@ -1,7 +1,8 @@
 import Image from "next/image";
+import ParticipantsScroller from "./ParticipantsScroller";
 
 interface BaseContent {
-  type: "video" | "image" | "highlights" | "text" | "notice" | "html";
+  type: "video" | "image" | "highlights" | "text" | "notice" | "html" | "participants";
   title?: string;
   priority?: boolean;
 }
@@ -38,7 +39,11 @@ interface HtmlContent extends BaseContent {
   content: string;
 }
 
-type Content = VideoContent | ImageContent | HighlightsContent | TextContent | NoticeContent | HtmlContent;
+interface ParticipantsContent extends BaseContent {
+  type: "participants";
+}
+
+type Content = VideoContent | ImageContent | HighlightsContent | TextContent | NoticeContent | HtmlContent | ParticipantsContent;
 
 interface ContentRendererProps {
   content: Content;
@@ -122,6 +127,14 @@ export default function ContentRenderer({ content, className = "" }: ContentRend
         <div className={`max-w-4xl mx-auto ${className}`}>
           {content.title && <h3 className="text-3xl font-bold mb-6 text-gray-900">{content.title}</h3>}
           <div className="prose prose-lg prose-gray mx-auto" dangerouslySetInnerHTML={{ __html: content.content }} />
+        </div>
+      );
+
+    case "participants":
+      return (
+        <div className={`w-full py-6 px-6 ${className}`}>
+          {content.title && <h3 className="text-3xl font-bold text-center mb-8 text-gray-900">{content.title}</h3>}
+          <ParticipantsScroller />
         </div>
       );
 

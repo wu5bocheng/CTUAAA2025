@@ -9,6 +9,11 @@ export const siteConfig = {
   },
   sections: [
     {
+      id: "participants",
+      type: "participants",
+      title: "参会嘉宾",
+    },
+    {
       id: "intro",
       type: "html",
       content: `
@@ -87,7 +92,7 @@ export const siteConfig = {
     {
       id: "notice",
       type: "notice",
-      content: "具体嘉宾名单与详细日程将陆续公布，敬请期待。",
+      content: "具体嘉宾名单与详细日程将陆续更新，敬请期待。",
     },
   ],
   footer: {

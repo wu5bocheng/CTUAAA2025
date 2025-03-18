@@ -1,4 +1,4 @@
-export type ContentType = "text" | "video" | "highlights" | "notice" | "image" | "html";
+export type ContentType = "text" | "video" | "highlights" | "notice" | "image" | "html" | "participants";
 
 export interface BaseContent {
   type: ContentType;
@@ -59,4 +59,8 @@ export interface HtmlContent extends BaseContent {
   content: string;
 }
 
-export type Content = TextContent | VideoContent | HighlightsContent | NoticeContent | ImageContent | HtmlContent;
+export interface ParticipantsContent extends BaseContent {
+  type: "participants";
+}
+
+export type Content = TextContent | VideoContent | HighlightsContent | NoticeContent | ImageContent | HtmlContent | ParticipantsContent;
