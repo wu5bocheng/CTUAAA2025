@@ -71,11 +71,20 @@ export const siteConfig = {
       items: [
         {
           id: "schedule",
-          label: "会议日程",
+          label: "会议日程-5月24日",
           content: {
             type: "image",
-            image: "/posters/agenda.png",
-            alt: "第十三届交通大学美洲校友联谊峰会日程安排",
+            image: "/posters/agenda1.png",
+            alt: "第十三届交通大学美洲校友联谊峰会日程安排5月24日",
+          },
+        },
+        {
+          id: "schedule2",
+          label: "会议日程-5月25日",
+          content: {
+            type: "image",
+            image: "/posters/agenda2.png",
+            alt: "第十三届交通大学美洲校友联谊峰会日程安排5月25日",
           },
         },
         {
