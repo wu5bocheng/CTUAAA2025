@@ -35,6 +35,42 @@ const unsortedArticles: Article[] = [
     coverImage: "/articles/2024-02-24-five-universities/cover.png",
     externalUrl: "https://mp.weixin.qq.com/s/EFUrWIgpinsrxIaZpRMR7A",
   },
+  {
+    slug: "2025-03-12-guest-announce",
+    title: "【重磅嘉宾揭晓】交通大学美洲校友峰会火热报名中",
+    date: "2025年03月12日",
+    coverImage: "/articles/2024-02-09-summit-registration/cover.png",
+    externalUrl: "https://mp.weixin.qq.com/s/FXaaTADfEGAX8x3qU_bqhw",
+  },
+  {
+    slug: "2025-03-15-kenneth-li-interview",
+    title: "从工程师到上市公司CFO——与交大校友 Kenneth Li 共话先进电力制造之路",
+    date: "2025年03月15日",
+    coverImage: "/articles/2025-kennth-li/cover.jpeg",
+    externalUrl: "https://mp.weixin.qq.com/s/s-1gPr_THwnUQt4InFkxag",
+  },
+  {
+    slug: "2025-03-12-hanxu-guest-announce",
+    title: "文远知行创始人兼CEO韩旭将出席交大美洲峰会｜Robobus亮相西班牙",
+    date: "2025年03月22日",
+    coverImage: "/articles/2025-Robobus-spain/cover.jpg",
+    externalUrl: "https://mp.weixin.qq.com/s/tw_-8f4WxuZ5LFp1Io1E9g",
+  },
+  {
+    slug: "2025-03-12-summit-registration",
+    title: "聚“交”硅谷，创领未来|交通大学美洲校友峰会创投路演报名开启！",
+    date: "2025年03月26日",
+    coverImage: "/articles/2024-02-09-summit-registration/cover.png",
+    externalUrl: "https://mp.weixin.qq.com/s/jI-ANze1prms4At5gx-vUg",
+  },
+  {
+    slug: "2025-03-12-virtual-marathon-registration",
+    title: "【交大生日·峰会云跑】虚拟马拉松挑战赛全球开跑！",
+    date: "2025年03月27日",
+    coverImage: "/articles/2025-virtual-marathon/cover.png",
+    externalUrl: "https://mp.weixin.qq.com/s/6Du2bArlgVh1z7ZIcvLwjg",
+  },
+
   // Add more articles here
 ];
 
