@@ -9,6 +9,11 @@ export const siteConfig = {
   },
   sections: [
     {
+      id: "participants",
+      type: "participants",
+      title: "参会嘉宾",
+    },
+    {
       id: "intro",
       type: "html",
       content: `
@@ -59,11 +64,6 @@ export const siteConfig = {
       type: "video",
       videoId: "PGC5_HWyRjw",
       title: "峰会宣传片",
-    },
-    {
-      id: "participants",
-      type: "participants",
-      title: "参会嘉宾",
     },
     {
       id: "conference",
