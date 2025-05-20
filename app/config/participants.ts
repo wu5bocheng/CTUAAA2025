@@ -88,9 +88,9 @@ export const participants: Participant[] = [
     image: "/participants/yun-zhang.png",
   },
   {
-    id: "hong-chen",
+    id: "jun-huang",
     industry: "科技前沿 学术无界",
-    image: "/participants/hong-chen.png",
+    image: "/participants/jun-huang.png",
   },
   {
     id: "sharon-li",
